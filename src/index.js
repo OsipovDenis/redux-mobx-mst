@@ -1,36 +1,33 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from 'mobx-react';
-import DevTools from "mobx-react-devtools";
 
 import TodoList from "./components/TodoList";
-import TodoListModel from "./models/TodoListModel";
-import TodoModel from "./models/TodoModel";
+import TodoListModelMobx from "./models/mobx/TodoListModel";
+import TodoListModelMst from "./models/mst/TodoListModel";
 
-const store = new TodoListModel();
+const storeMobx = new TodoListModelMobx();
+const storeMst = TodoListModelMst.create();
 
 render(
   <div style={{ display: 'flex', justifyContent: 'space-around' }}>
     <div style={{ width: '300px'}}>
       <h1>Mobx</h1>
-      <Provider store={store}>
-        {/* <DevTools /> */}
+      <Provider store={storeMobx}>
         <TodoList />
       </Provider>
     </div>
 
     <div style={{ width: '300px'}}>
       <h1>MST</h1>
-      <Provider store={store}>
-        {/* <DevTools /> */}
+      <Provider store={storeMst}>
         <TodoList />
       </Provider>
     </div>
 
     <div style={{ width: '300px'}}>
       <h1>Redux</h1>
-      <Provider store={store}>
-        {/* <DevTools /> */}
+      <Provider store={storeMobx}>
         <TodoList />
       </Provider>
     </div>
@@ -38,13 +35,18 @@ render(
   document.getElementById("root")
 );
 
-store.addTodo("Get Coffee");
-store.addTodo("Write simpler code");
-store.todos[0].finished = true;
+storeMobx.addTodo("Get Coffee");
+storeMobx.addTodo("Write simpler code");
+storeMobx.todos[0].finished = true;
+
+storeMst.addTodo("Get Coffee");
+storeMst.addTodo("Write simpler code");
+storeMst.todos[0].setFinished(true);
 
 setTimeout(() => {
-  store.addTodo("Get a cookie as well");
+  storeMobx.addTodo("Get a cookie as well");
+  storeMst.addTodo("Get a cookie as well");
 }, 2000);
 
 // playing around in the console
-window.store = store;
+window.storeMobx = storeMobx;

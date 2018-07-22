@@ -27,12 +27,14 @@
     "babel-preset-stage-1": "^6.24.1",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.4",
+    "ava": "^0.25.0"
   },
   "dependencies": {
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "mobx-react-devtools": "^6.0.1",
+    "mobx-state-tree": "^3.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   }

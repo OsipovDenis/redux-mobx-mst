@@ -5,26 +5,37 @@ import { observer, inject } from "mobx-react";
 @inject('store')
 @observer
 export default class Todo extends Component {
-  @observable mode = 'edit'
+  @observable mode = 'done'
 
   get store() {
     return this.props.store;
   }
 
+  get todo() {
+    return this.props.todo;
+  }
+
   render() {
-    const { todo } = this.props;
     return (
       <li>
         <input
           type="checkbox"
-          checked={todo.finished}
-          onClick={() => (todo.finished = !todo.finished)}
+          checked={this.todo.finished}
+          onClick={this.handleFinished}
         />
-        {this.mode === 'done' ? <input value={todo.title} onChange={this.handleChange} /> : todo.title}
-        <button type="button" onClick={this.handleEdit}>{this.mode === 'edit' ? 'Edit' : 'Done'}</button>
+        {this.mode === 'edit' ? <input value={this.todo.title} onChange={this.handleChange} /> : this.todo.title}
+        <button type="button" onClick={this.handleEdit}>{this.mode === 'edit' ? 'Done' : 'Edit'}</button>
         <button type="button" onClick={this.handleDelete}>Delete</button>
       </li>
     );
+  }
+
+  handleFinished = () => {
+    if (this.todo.setFinished) { // Кейс mst, нельзя меняьб модель снаружи
+      this.todo.setFinished(!this.todo.finished)
+    } else {  // Кейс mobx (прим. Антипаттерн, мешаем бизнес-логику и вьюхи)
+      this.todo.finished = !this.todo.finished;
+    }
   }
 
   handleEdit = ({target: value}) => {
@@ -36,11 +47,11 @@ export default class Todo extends Component {
   }
 
   handleDelete = () => {
-    this.props.store.removeTodo(this.props.todo);
+    this.props.store.removeTodo(this.todo);
   }
 
   handleChange = ({ target: { value } }) => {
-    this.props.todo.setTitle(value);
+    this.todo.setTitle(value);
   }
 }
 

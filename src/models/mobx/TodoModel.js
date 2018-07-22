@@ -12,5 +12,4 @@ export default class TodoModel {
   @action setTitle(title) {
     this.title = title;
   }
-
 }
