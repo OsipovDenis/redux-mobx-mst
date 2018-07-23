@@ -6,7 +6,17 @@ import { unfinishedTodoCountSelector } from '../models/redux/selectors';
 
 import TodoRedux from "./TodoRedux";
 
-class TodoListRedux extends React.Component {
+const mapStateToProps = store => ({
+  store,
+  unfinishedTodoCount: unfinishedTodoCountSelector(store)
+});
+
+const mapDispatchToProps = dispatch => ({
+  addTodoAction: bindActionCreators(addTodoAction, dispatch)
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class TodoListRedux extends React.Component {
   state = {
     newTodoTitle: ""
   }
@@ -25,9 +35,10 @@ class TodoListRedux extends React.Component {
         </form>
         <hr />
         <ul>
-          {Boolean(this.props.store.todos.length) && this.props.store.todos.map(todo => (
-            <TodoRedux key={todo.id} todo={todo} />
-          ))}
+          {Boolean(this.props.store.todos.length) && this.props.store.todos.map((todo, index) => {
+            console.log('remap');
+            return <TodoRedux key={todo.id} index={index} />
+          })}
         </ul>
         Tasks left: {this.props.unfinishedTodoCount}
       </div>
@@ -44,14 +55,3 @@ class TodoListRedux extends React.Component {
     e.preventDefault();
   };
 }
-
-const mapStateToProps = store => ({
-  store,
-  unfinishedTodoCount: unfinishedTodoCountSelector(store)
-});
-
-const mapDispatchToProps = dispatch => ({
-  addTodoAction: bindActionCreators(addTodoAction, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoListRedux);

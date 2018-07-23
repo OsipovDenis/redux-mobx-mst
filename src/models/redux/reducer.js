@@ -18,7 +18,7 @@ const todosReducer = (state = defaultState, action) => {
         return Object.assign({}, state, {
             todos: state.todos.map(item => {
               if (item.id === action.id) {
-                item.title = action.title;
+                return { ...item, title: action.title };
               }
               return item;
             })
@@ -28,7 +28,7 @@ const todosReducer = (state = defaultState, action) => {
         return Object.assign({}, state, {
             todos: state.todos.map(item => {
               if (item.id === action.id) {
-                item.finished = action.finished;
+                return { ...item, finished: action.finished };
               }
               return item;
             })

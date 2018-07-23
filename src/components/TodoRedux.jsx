@@ -3,7 +3,18 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { removeTodoAction, setTodoTitleAction, setTodoFinishedAction } from '../models/redux/actions';
 
-class TodoRedux extends Component {
+const mapStateToProps = (store, props) => ({
+  todo: store.todos[props.index]
+});
+
+const mapDispatchToProps = dispatch => ({
+  removeTodoAction: bindActionCreators(removeTodoAction, dispatch),
+  setTodoTitleAction: bindActionCreators(setTodoTitleAction, dispatch),
+  setTodoFinishedAction: bindActionCreators(setTodoFinishedAction, dispatch),
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class TodoRedux extends Component {
   state = {
     mode: 'done'
   }
@@ -43,22 +54,9 @@ class TodoRedux extends Component {
   }
 
   handleChange = ({ target: { value } }) => {
-    console.log('value: ', value);
     this.props.setTodoTitleAction({
       id: this.props.todo.id,
       title: value
     });
   }
 }
-
-// const mapStateToProps = () => ({
-//   // todo: store.todos[props.index]
-// });
-
-const mapDispatchToProps = dispatch => ({
-  removeTodoAction: bindActionCreators(removeTodoAction, dispatch),
-  setTodoTitleAction: bindActionCreators(setTodoTitleAction, dispatch),
-  setTodoFinishedAction: bindActionCreators(setTodoFinishedAction, dispatch),
-})
-
-export default connect(undefined, mapDispatchToProps)(TodoRedux);

@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { observable } from 'mobx';
-import { observer, inject } from "mobx-react";
+import { observer, inject } from "mobx-react"; // Расширенный пакет PropTypes - https://github.com/mobxjs/mobx-react#proptypes
 
+// Берёт из React.Context наш store и прокидывает его пропсами в компонент.
 @inject('store')
+// observer очень интересный декоратор - это реакт компонент, который патчит наш компонент предмет перерендера.
+// observer нужно использовать всегда, когда используются observable данные.
+// Добавляется новая хука componentWillReact, в тот момент когда изменяются observable данные в компоненте.
+// componentWillReceiveProps не работает.
 @observer
 export default class Todo extends Component {
   @observable mode = 'done'
