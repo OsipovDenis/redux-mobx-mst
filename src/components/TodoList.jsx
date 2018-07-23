@@ -32,7 +32,6 @@ class TodoList extends React.Component {
     );
   }
 
-  // Как по мне это антипаттерн, не стоит мешать бизнес-логику с вьюхами
   @action
   handleInputChange = e => {
     this.newTodoTitle = e.target.value;

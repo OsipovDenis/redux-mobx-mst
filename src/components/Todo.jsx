@@ -33,7 +33,7 @@ export default class Todo extends Component {
   handleFinished = () => {
     if (this.todo.setFinished) { // Кейс mst, нельзя меняьб модель снаружи
       this.todo.setFinished(!this.todo.finished)
-    } else {  // Кейс mobx (прим. Антипаттерн, мешаем бизнес-логику и вьюхи)
+    } else {  // Кейс mobx (прим. Антипаттерн, мешаем бизнес-логику моделей и вьюхи)
       this.todo.finished = !this.todo.finished;
     }
   }
