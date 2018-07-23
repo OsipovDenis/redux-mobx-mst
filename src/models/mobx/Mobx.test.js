@@ -1,7 +1,7 @@
 import test from 'ava';
 import TodoListModel from './TodoListModel'
 
-test('foo', t => {
+test('Mobx', t => {
   const model = new TodoListModel();
 
   model.addTodo('new todo');
@@ -20,5 +20,4 @@ test('foo', t => {
   t.is(model.todos.length, 2);
   model.removeTodo(model.todos[1]);
   t.is(model.todos.length, 1);
-
 });
