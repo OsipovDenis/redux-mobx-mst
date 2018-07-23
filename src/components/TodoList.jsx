@@ -7,6 +7,7 @@ import Todo from "./Todo";
 @inject('store')
 @observer
 class TodoList extends React.Component {
+  // https://medium.com/react-native-training/ditching-setstate-for-mobx-766c165e4578
   @observable newTodoTitle = "";
 
   render() {
