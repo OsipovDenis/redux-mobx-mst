@@ -15,6 +15,7 @@ const todosReducer = (state = defaultState, action) => {
         });
       }
       case 'SET_TODO_TITLE': {
+        console.log('action: ', action);
         return Object.assign({}, state, {
             todos: state.todos.map(item => {
               if (item.id === action.id) {

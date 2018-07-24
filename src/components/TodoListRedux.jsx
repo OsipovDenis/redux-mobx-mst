@@ -35,10 +35,9 @@ export default class TodoListRedux extends React.Component {
         </form>
         <hr />
         <ul>
-          {Boolean(this.props.store.todos.length) && this.props.store.todos.map((todo, index) => {
-            console.log('remap');
-            return <TodoRedux key={todo.id} index={index} />
-          })}
+          {Boolean(this.props.store.todos.length) && this.props.store.todos.map((todo, index) =>
+            <TodoRedux key={todo.id} todo={todo} />
+          )}
         </ul>
         Tasks left: {this.props.unfinishedTodoCount}
       </div>
@@ -51,7 +50,7 @@ export default class TodoListRedux extends React.Component {
 
   handleFormSubmit = e => {
     this.props.addTodoAction(this.state.newTodoTitle);
-    this.setState({ newTodoTitle: '', finished: false })
+    this.setState({ newTodoTitle: '' })
     e.preventDefault();
   };
 }

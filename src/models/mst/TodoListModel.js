@@ -2,8 +2,8 @@ import { types } from 'mobx-state-tree';
 import TodoModel from './TodoModel';
 
 const TodoListModel = types.model('TodoListModel', {
-  id: types.identifier,
-  todos: types.optional(types.array(TodoModel), []),
+  id: types.identifier, // аналог key в react
+  todos: types.optional(types.array(TodoModel), [])
 }).preProcessSnapshot((model = {}) => { // Обязательно чистая функция, не надо менять входной аргумент.
   const self = { ...model };
   if (!self.id) {
@@ -27,4 +27,3 @@ const TodoListModel = types.model('TodoListModel', {
 }));
 
 export default TodoListModel;
-

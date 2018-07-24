@@ -1,4 +1,5 @@
-import { types } from 'mobx-state-tree';
+import { types, getParent } from 'mobx-state-tree';
+import TodoListModel from './TodoListModel';
 
 const TodoModel = types.model('TodoModel', {
   id: types.identifier,

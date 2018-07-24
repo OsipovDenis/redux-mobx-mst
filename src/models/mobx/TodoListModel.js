@@ -2,7 +2,8 @@ import {
   observable,
   computed,
   action,
-  when
+  when,
+  decorate
 } from "mobx";
 
 import TodoModel from "./TodoModel";
@@ -19,7 +20,7 @@ export default class TodoListModel {
     when(
       () => this.todos.length && this.todos[1] && this.todos[1].finished,
       () => { console.log('second is ready'); }
-    )
+    );
   }
 
   // action должен приводить к изменению состояния. Как мы это будем делать не важно.
@@ -31,6 +32,12 @@ export default class TodoListModel {
   //    Простыми словами, прирост производительности.
   @action
   addTodo(title) {
+    if (this.todos.length){
+      const title = this.todos.length && this.todos[0].title;
+      this.todos[0].title = 'Новое имя переменной';
+      this.todos[0].title = title;
+    }
+
     this.todos.push(new TodoModel(title));
   }
 
@@ -39,14 +46,16 @@ export default class TodoListModel {
     // Сложные типы данных не путать с обычными js. Mobx arrays имеют расширенный функционал.
     // https://mobx.js.org/refguide/array.html
     // Но есть один минус:)
-    // Array.isArray(this.todos) вернёт false,
-    // чтобы проверка прошла, нужно преобразовать к обычному массиву Array.isArray(this.todos.slice()) тогда будети true.
+    // Array.isArray(this.todos) вернёт false.
+    // Чтобы проверка прошла, нужно преобразовать к обычному массиву Array.isArray(this.todos.slice()) тогда будети true.
     // И это нужно делать всегда при работе со другими библиотеками или встроенными функциями :/
     this.todos.remove(todo);
   }
 
-  // Позволяет получать данные, которые будут вычеслены автоматически при изменении соответствующих параметров.
+  // computed значения похожи на ячейки в excel.
+  // computed данные автоматически получаются из состояния, если какое-либо значение, влияющее на них, изменяется.
   // computed данные кэшируются и всегда актуальные.
+  // Рекомендуется их всегда испольховать при расчетах.
   @computed
   get unfinishedTodoCount() {
     return this.todos.filter(todo => !todo.finished).length;
@@ -63,3 +72,11 @@ export default class TodoListModel {
   //   this.todos = todos;
   // }
 }
+
+// В функциональном стиле
+// decorate(TodoListModel, {
+//     todos: observable,
+//     addTodo: action,
+//     removeTodo: action,
+// })
+

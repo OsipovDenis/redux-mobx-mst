@@ -1,26 +1,21 @@
-const addTodo = title => ({
+export const addTodoAction = title => ({
   type: 'ADD_TODO',
   id: Math.random(),
   title
 });
 
-const removeTodo = id => ({
+export const removeTodoAction = id => ({
   type: 'REMOVE_TODO',
   id
 });
 
-const setTodoTitle = action => ({
+export const setTodoTitleAction = data => ({
   type: 'SET_TODO_TITLE',
-  ...action
+  ...data
 });
 
-const setTodoFinished = action => ({
+export const setTodoFinishedAction = data => ({
   type: 'SET_TODO_FINISHED',
-  ...action
+  ...data
 });
-
-export const addTodoAction = title => dispatch => dispatch(addTodo(title));
-export const removeTodoAction = id => dispatch => dispatch(removeTodo(id));
-export const setTodoTitleAction = data => dispatch => dispatch(setTodoTitle(data));
-export const setTodoFinishedAction = data => dispatch => dispatch(setTodoFinished(data));
 
