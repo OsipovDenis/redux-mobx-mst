@@ -46,7 +46,6 @@ render(
   document.getElementById("root")
 );
 
-
 storeRedux.dispatch(addTodoAction("Get Coffee"));
 storeRedux.dispatch(addTodoAction("Write simpler code"));
 storeRedux.dispatch(setTodoFinishedAction({id: storeRedux.getState().todos[0].id, finished: true}));

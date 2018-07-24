@@ -50,7 +50,6 @@ export default class TodoRedux extends Component {
   }
 
   handleChange = ({ target: { value } }) => {
-    console.log('value: ', value);
     this.props.setTodoTitleAction({
       id: this.props.todo.id,
       title: value
